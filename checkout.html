@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Get Supersuite — Build. Launch. Grow.</title>
+  <meta name="description" content="One purchase. One export. Your site, forever. The no-code visual website builder for founders, marketers and agencies."/>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ff6b35'/%3E%3Ctext x='16' y='23' font-family='Arial Black' font-size='14' font-weight='900' text-anchor='middle' fill='white'%3ESS%3C/text%3E%3C/svg%3E"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <!-- Gumroad overlay script -->
+  <script src="https://gumroad.com/js/gumroad.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange:    #ff6b35;
+      --orange-dk: #e85520;
+      --orange-lt: #ff8c5a;
+      --dark:      #0d0d12;
+      --dark-2:    #13131a;
+      --dark-3:    #1a1a26;
+      --dark-4:    #222233;
+      --white:     #ffffff;
+      --muted:     rgba(255,255,255,0.45);
+      --border:    rgba(255,255,255,0.07);
+      --font-h:    'Syne', sans-serif;
+      --font-b:    'DM Sans', sans-serif;
+      --font-m:    'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--white);
+      font-family: var(--font-b);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NOISE OVERLAY ─────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: rgba(13,13,18,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-mark {
+      width: 34px; height: 34px;
+      background: var(--orange);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-h);
+      font-weight: 900;
+      font-size: 13px;
+      color: white;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-name {
+      font-family: var(--font-h);
+      font-weight: 800;
+      font-size: 17px;
+      color: var(--white);
+    }
+
+    .nav-tag {
+      font-family: var(--font-m);
+      font-size: 10px;
+      color: var(--orange);
+      background: rgba(255,107,53,0.12);
+      border: 1px solid rgba(255,107,53,0.25);
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--white); }
+
+    /* ── HERO ──────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 440px;
+      gap: 60px;
+      align-items: center;
+      padding: 120px 80px 80px;
+      max-width: 1280px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    /* Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: rgba(255,107,53,0.12);
+      top: -200px; left: -100px;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: rgba(255,107,53,0.06);
+      bottom: 100px; right: 200px;
+      animation: drift 16s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes drift {
+      from { transform: translate(0,0); }
+      to   { transform: translate(40px, 30px); }
+    }
+
+    /* Left column */
+    .hero-left { z-index: 1; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-m);
+      font-size: 11px;
+      color: var(--orange);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(255,107,53,0.08);
+      border: 1px solid rgba(255,107,53,0.2);
+      border-radius: 100px;
+      padding: 6px 14px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero-h1 {
+      font-family: var(--font-h);
+      font-size: clamp(40px, 5vw, 64px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    .hero-h1 em {
+      font-style: normal;
+      color: var(--orange);
+      position: relative;
+    }
+
+    .hero-h1 em::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 0; right: 0;
+      height: 3px;
+      background: var(--orange);
+      border-radius: 2px;
+      opacity: 0.35;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    /* Flow steps */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 48px;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      position: relative;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 44px;
+      bottom: -4px;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .flow-num {
+      width: 32px; height: 32px;
+      min-width: 32px;
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-m);
+      font-size: 12px;
+      color: var(--orange);
+      font-weight: 500;
+    }
+
+    .flow-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .flow-text span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Trust row */
+    .trust-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      animation: fadeUp 0.6s ease 0.4s both;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .trust-item svg {
+      color: var(--orange);
+      flex-shrink: 0;
+    }
+
+    /* ── CHECKOUT CARD ─────────────────────────────── */
+    .checkout-col {
+      z-index: 1;
+      animation: fadeUp 0.6s ease 0.15s both;
+    }
+
+    .checkout-card {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .card-header {
+      padding: 28px 28px 24px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(255,107,53,0.06), transparent);
+    }
+
+    .card-label {
+      font-family: var(--font-m);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-family: var(--font-h);
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .card-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Tier selector */
+    .tier-selector {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .tier-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .tier-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: transparent;
+      position: relative;
+    }
+
+    .tier-option:hover {
+      border-color: rgba(255,107,53,0.3);
+      background: rgba(255,107,53,0.04);
+    }
+
+    .tier-option.active {
+      border-color: var(--orange);
+      background: rgba(255,107,53,0.08);
+    }
+
+    .tier-option.active::before {
+      content: '✓';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px; height: 20px;
+      background: var(--orange);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    .tier-left { display: flex; align-items: center; gap: 12px; }
+
+    .tier-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: var(--dark-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .tier-name {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 1px;
+    }
+
+    .tier-desc {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .tier-price {
+      font-family: var(--font-h);
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--white);
+      padding-right: 28px;
+    }
+
+    .tier-badge {
+      position: absolute;
+      top: -8px;
+      left: 16px;
+      background: var(--orange);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: 100px;
+    }
+
+    /* What's included */
+    .includes {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .inc-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .inc-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .inc-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .inc-item::before {
+      content: '✓';
+      width: 16px; height: 16px;
+      min-width: 16px;
+      background: rgba(255,107,53,0.15);
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* CTA */
+    .card-cta {
+      padding: 24px 28px;
+    }
+
+    /* Gumroad button — we style this ourselves */
+    .gumroad-button,
+    .buy-btn {
+      display: block !important;
+      width: 100% !important;
+      padding: 16px 24px !important;
+      background: var(--orange) !important;
+      color: white !important;
+      font-family: var(--font-h) !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      border: none !important;
+      border-radius: 12px !important;
+      cursor: pointer !important;
+      text-align: center !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      letter-spacing: -0.3px !important;
+      box-shadow: 0 8px 24px rgba(255,107,53,0.35) !important;
+      margin-bottom: 0 !important;
+    }
+
+    .buy-btn:hover {
+      background: var(--orange-dk) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 12px 32px rgba(255,107,53,0.45) !important;
+    }
+
+    .buy-btn:active {
+      transform: translateY(0) !important;
+    }
+
+    .card-guarantee {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── FEATURES STRIP ────────────────────────────── */
+    .features-strip {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 80px 100px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .strip-label {
+      font-family: var(--font-m);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--orange);
+      margin-bottom: 16px;
+    }
+
+    .strip-title {
+      font-family: var(--font-h);
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 48px;
+    }
+
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feat-card {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+
+    .feat-card:hover { border-color: rgba(255,107,53,0.2); }
+
+    .feat-icon {
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    .feat-title {
+      font-family: var(--font-h);
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .feat-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── BURN CALLOUT ──────────────────────────────── */
+    .burn-callout {
+      max-width: 1280px;
+      margin: 0 auto 80px;
+      padding: 0 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .burn-inner {
+      background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(255,107,53,0.03));
+      border: 1px solid rgba(255,107,53,0.2);
+      border-radius: 20px;
+      padding: 40px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .burn-title {
+      font-family: var(--font-h);
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .burn-desc {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-h);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--white);
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 100px 24px 60px;
+        gap: 40px;
+      }
+
+      .checkout-col { order: -1; }
+
+      .features-strip,
+      .burn-callout { padding: 0 24px 60px; }
+
+      .feat-grid { grid-template-columns: 1fr 1fr; }
+
+      .burn-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 28px;
+      }
+
+      footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+
+      .inc-list { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .feat-grid { grid-template-columns: 1fr; }
+      .trust-row { flex-wrap: wrap; gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-mark">SS</div>
+    <span class="nav-name">Supersuite</span>
+    <span class="nav-tag">SSV26.1</span>
+  </a>
+  <a href="index.html" class="nav-back">← Back to home</a>
+</nav>
+
+<!-- HERO + CHECKOUT -->
+<section class="hero">
+
+  <!-- LEFT — Copy -->
+  <div class="hero-left">
+    <div class="hero-eyebrow">Basic is one-time · Pro & Agency are monthly</div>
+
+    <h1 class="hero-h1">
+      Build your site.<br/>
+      <em>Export it once.</em><br/>
+      Keep it forever.
+    </h1>
+
+    <p class="hero-sub">
+      Supersuite is a visual website builder that works right in your browser — no installs, no subscriptions, no monthly fees. Build freely, then export when you're ready.
+    </p>
+
+    <!-- How it works -->
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <div class="flow-text">
+          <strong>Purchase → get your code</strong>
+          <span>Gumroad sends a unique access code to your email instantly.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <div class="flow-text">
+          <strong>Download → open app.html</strong>
+          <span>Double-click. No install, no server. Works offline.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <div class="flow-text">
+          <strong>Build freely</strong>
+          <span>Drag blocks, edit everything visually. Your code stays active until you're ready.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <div class="flow-text">
+          <strong>Export → code retires</strong>
+          <span>Click export, your files download. Code burns. Site is yours forever.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        No subscription
+      </div>
+      <div class="trust-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Works offline
+      </div>
+      <div class="trust-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        30-day guarantee
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT — Checkout Card -->
+  <div class="checkout-col">
+    <div class="checkout-card">
+
+      <div class="card-header">
+        <div class="card-label">Get Supersuite</div>
+        <div class="card-title">Choose your plan</div>
+        <div class="card-sub">Basic is one-time. Pro & Agency are monthly.</div>
+      </div>
+
+      <!-- Tier selector -->
+      <div class="tier-selector">
+        <div class="tier-label">Select tier</div>
+
+        <div class="tier-option active" onclick="selectTier(this, 'basic', '$14.97')">
+          <div class="tier-left">
+            <div class="tier-icon">⚡</div>
+            <div>
+              <div class="tier-name">Basic</div>
+              <div class="tier-desc">One-time · Code works until you export</div>
+            </div>
+          </div>
+          <div class="tier-price">$14.97</div>
+        </div>
+
+        <div class="tier-option" onclick="selectTier(this, 'pro', '$29.99')" style="position:relative;">
+          <div class="tier-badge">Most Popular</div>
+          <div class="tier-left">
+            <div class="tier-icon">🚀</div>
+            <div>
+              <div class="tier-name">Pro</div>
+              <div class="tier-desc">5 exports/month · Full access</div>
+            </div>
+          </div>
+          <div class="tier-price" style="padding-right:28px;">$29.99<span style="font-size:11px;font-weight:400;opacity:0.5;">/mo</span></div>
+        </div>
+
+        <div class="tier-option" onclick="selectTier(this, 'agency', '$97.70')">
+          <div class="tier-left">
+            <div class="tier-icon">🏢</div>
+            <div>
+              <div class="tier-name">Agency</div>
+              <div class="tier-desc">5 client seats · Full access</div>
+            </div>
+          </div>
+          <div class="tier-price" style="padding-right:28px;">$97.70<span style="font-size:11px;font-weight:400;opacity:0.5;">/mo</span></div>
+        </div>
+      </div>
+
+      <!-- Includes -->
+      <div class="includes">
+        <div class="inc-label">Every plan includes</div>
+        <div class="inc-list">
+          <div class="inc-item">Visual builder</div>
+          <div class="inc-item">9 block types</div>
+          <div class="inc-item">Live preview</div>
+          <div class="inc-item">HTML/CSS export</div>
+          <div class="inc-item">Mobile ready</div>
+          <div class="inc-item">Works offline</div>
+          <div class="inc-item">Live collab</div>
+          <div class="inc-item">Project library</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="card-cta">
+        <!--
+          SETUP INSTRUCTIONS:
+          1. Replace each href below with your actual Gumroad product URL
+          2. Format: https://YOUR-NAME.gumroad.com/l/YOUR-PRODUCT
+          3. The class="gumroad-button" activates the Gumroad overlay popup
+          4. Do NOT change the class name — it must stay "gumroad-button"
+        -->
+        <a id="buy-btn"
+           class="gumroad-button buy-btn"
+           href="https://YOUR-NAME.gumroad.com/l/supersuite-basic"
+           data-gumroad-overlay-checkout="true">
+           Get Basic — $14.97 (one-time) →
+        </a>
+
+        <div class="card-guarantee">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          30-day money-back guarantee · Secure checkout via Gumroad
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- FEATURES -->
+<div class="features-strip">
+  <div class="strip-label">What's inside</div>
+  <h2 class="strip-title">Everything you need to launch</h2>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-icon">⚡</div>
+      <div class="feat-title">Revenue Blocks</div>
+      <div class="feat-desc">Hero, Lead Form, Pricing, Testimonials, Features, Gallery, CTA, Nav, Footer, Widget Importer. Drop in, customize, done.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🎨</div>
+      <div class="feat-title">Live Visual Editor</div>
+      <div class="feat-desc">Edit text, colors, fonts, spacing, and layouts instantly. What you see is exactly what exports.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🤖</div>
+      <div class="feat-title">AI Studio Agent</div>
+      <div class="feat-desc">Built-in AI that writes copy, generates layouts, and helps you build faster. Pro & Agency only.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🤝</div>
+      <div class="feat-title">Live Collaboration</div>
+      <div class="feat-desc">Share a code with your team. Multiple editors, real-time sync. No account needed.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">📦</div>
+      <div class="feat-title">Perfect Export</div>
+      <div class="feat-desc">Clean HTML, CSS, and JS. Every style retained. Mobile optimized. Open in any browser — no server needed.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🔌</div>
+      <div class="feat-title">Widget Imports</div>
+      <div class="feat-desc">Embed Elfsight, Tidio, Cal.com, Stripe, YouTube or any iframe directly as a revenue block.</div>
+    </div>
+  </div>
+</div>
+
+<!-- BURN CALLOUT -->
+<div class="burn-callout">
+  <div class="burn-inner">
+    <div>
+      <div class="burn-title">⚡ One purchase. One export.</div>
+      <div class="burn-desc">
+        Your access code stays active while you build — take all the time you need. When you're ready and hit Export, your files download and the code retires permanently. Buy again for your next site. Simple, fair, no subscriptions.
+      </div>
+    </div>
+    <a class="gumroad-button buy-btn"
+       href="https://YOUR-NAME.gumroad.com/l/supersuite-basic"
+       data-gumroad-overlay-checkout="true"
+       style="white-space:nowrap; min-width:180px;">
+      Get Started →
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="nav-mark" style="width:28px;height:28px;font-size:11px;">SS</div>
+    Supersuite
+  </div>
+  <span>© 2026 Supersuite · Built with love · <a href="index.html" style="color:inherit;">Home</a></span>
+  <span>Questions? support@supersuite.com</span>
+</footer>
+
+<script>
+/* ── TIER SELECTOR ─────────────────────────────────────────────── */
+
+// Map tier → your actual Gumroad product URLs
+// REPLACE THESE with your real Gumroad links
+const GUMROAD_LINKS = {
+  basic:  'https://YOUR-NAME.gumroad.com/l/supersuite-basic',
+  pro:    'https://YOUR-NAME.gumroad.com/l/supersuite-pro',
+  agency: 'https://YOUR-NAME.gumroad.com/l/supersuite-agency',
+};
+
+const BTN_LABELS = {
+  basic:  'Get Basic — $14.97 (one-time) →',
+  pro:    'Get Pro — $29.99/month →',
+  agency: 'Get Agency — $97.70/month →',
+};
+
+let currentTier = 'basic';
+
+function selectTier(el, tier, price) {
+  const options = document.querySelectorAll('.tier-option');
+  options.forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+
+  currentTier = tier;
+
+  const btn = document.getElementById('buy-btn');
+  btn.href        = GUMROAD_LINKS[tier];
+  btn.textContent = BTN_LABELS[tier];
+}
+
+/* ── SCROLL ANIMATIONS ─────────────────────────────────────────── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.feat-card, .burn-inner').forEach((el, i) => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(24px)';
+  el.style.transition = `opacity 0.5s ease ${i * 0.08}s, transform 0.5s ease ${i * 0.08}s`;
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
